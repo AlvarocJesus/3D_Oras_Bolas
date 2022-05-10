@@ -1,0 +1,12 @@
+## Coisas para fazer
+- [x] Desenhar
+  - [x] Campo
+  - [x] Robô
+  - [x] Bola
+  - [x] Area de nascimento do robô
+- [ ] Animação
+  - [x] trajetória bola
+  - [ ] movimento robô
+- [ ] Resultado final
+  - [ ] Mostrar ponto de encontro bola X robô
+  - [ ] Tempo que robô levou para chegar ate a bola
