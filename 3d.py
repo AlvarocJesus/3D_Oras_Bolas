@@ -1,27 +1,35 @@
+import tornado
 from vpython import *
 from random import uniform
 import unicodedata
 import math
 import os
 
-# ----teste ------
 def remove_control_characters(s):
-	return "".join(ch for ch in s if unicodedata.category(ch)[0] != "C")
+	return "".join(ch for ch in s if unicodedata.category(ch)[0]!="C")
 
+trajetoria_bola = open("./trajetoria.txt", "r")
+dados_bola = trajetoria_bola.readlines()
+trajetoria_bola.close()
 
-tragetoria_bola = open("./trajetoria.txt", "r")
-# tragetoria_bola = open("./Ora_bolas-trajetoria _bola_oficial.txt", "r")
-dados = tragetoria_bola.readlines()
-tragetoria_bola.close()
+trajetoria_robo = open("./trajetoria_robo.txt", "r")
+dados_robo = trajetoria_robo.readlines()
+trajetoria_robo.close()
+traj_robo = []
 
 # -------------------------------Formatação de dados da bola-------------------
 dados_formatados = []
-for linha in dados:
+for linha in dados_bola:
 	linha = remove_control_characters(linha)
 	if linha == "":
 		continue
 	dados_formatados.append(linha)
 dados_formatados.pop(0)
+
+for linha in dados_robo:
+	linha = linha.strip()
+	traj_robo.append(linha)
+traj_robo.pop(0)
 
 # Separar os dados da bola em listas
 T_bola = []
@@ -58,52 +66,40 @@ for linha in dados_formatados:
 			dado += char
 
 finalizar = 0
-# ---------------------
-Yr = -1
-print("Digite os pontos iniciais do robo:")
-Xr = float(input("Escolha o ponto X: "))
-Yr = float(input("Escolha o ponto Y: "))
 
-# Adequação ao padrão canvas
-Xr = Xr * 10
-Yr = Yr * 10
+T_robo = []
+X_robo = []
+Y_robo = []
+teste = []
+for linha in traj_robo:
+  linha = linha.split(" ")
+  T_robo.append(float(linha[0]))
+  X_robo.append(float(linha[1]))
+  Y_robo.append(float(linha[2]))
+  teste.append(linha)
 
-positionInitialBall = vector(X_bola[0] * 10, Y_bola[0] * 10, 0)
+positionInitialBall = vector(X_bola[0] * 10, Y_bola[0] * 10, 2)
 
 campo = box(pos=vector(45, 30, 0), size=vector(90, 60, 0), color=color.green)
 ball = sphere(pos=positionInitialBall, radius=2, color=color.cyan, make_trail=True, retain=1000)
-robo = box(pos=vector(Xr, Yr, 0), size=vector(10, 10, 10), color=color.red, make_trail=True, retain=1000)
-pointer = arrow(pos=vector(1, 2, 0), axis=vector(50, 0, 0), shaftwidth=1, color=color.yellow)
+robo = box(pos=vector(X_robo[0] * 10, Y_robo[0] * 10, 2.6), size=vector(5, 5, 5), color=color.red, make_trail=True, retain=1000)
 delimiter = ring(pos=positionInitialBall, axis=vector(0, 0, 1), radius=10, thickness=0.1)
 
-# ----------Calculo do ponto de encontro--------------------
 # ----------Movimentação da bola--------------------
 # ----------Movimentação do Robô--------------------
 for i in range(len(X_bola)):
-	X_bola_teste = X_bola[i] * 10
-	Y_bola_teste = Y_bola[i] * 10
-
 	sleep(0.02)
 	ball.pos.x = X_bola[i] * 10
 	ball.pos.y = Y_bola[i] * 10
 
-	dist_robo_bola = math.sqrt((X_bola_teste - Xr) ** 2 + (Y_bola_teste - Yr) ** 2)
+	robo.pos.x = X_robo[i] * 10
+	robo.pos.y = Y_robo[i] * 10
 
-	velocidade_robo = 280 / 10
-	if dist_robo_bola >= (140 / 10):
-		Tr = ((dist_robo_bola - (140 / 10)) / velocidade_robo) + 1
-	else:
-		Tr = math.sqrt(dist_robo_bola * 2 / velocidade_robo)
-
-	if T_bola[i] >= Tr:
-		robo.pos.x += 1
-		robo.pos.y += 1
-		Xfinal = X_bola_teste
-		Yfinal = Y_bola_teste
-		Tfinal = T_bola[i]
-		finalizar = 2
-		robo.pos.x = Xfinal
-		robo.pos.y = Yfinal
+	print(f'T_bola[i]: {T_bola[i]} \nT_robo[-1]: {T_robo[i]}')
+	if T_bola[i] >= T_robo[i]:
+		print(f'T_bola[i]: {T_bola[i]} \nT_robo[-1]: {T_robo[i]}')
+		robo.pos.x = X_bola[i] * 10
+		robo.pos.y = Y_bola[i] * 10
 		break
 
 	if i == 100:
