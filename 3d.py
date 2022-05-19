@@ -73,9 +73,9 @@ Y_robo = []
 teste = []
 for linha in traj_robo:
   linha = linha.split(" ")
-  T_robo.append(float(linha[0]))
-  X_robo.append(float(linha[1]))
-  Y_robo.append(float(linha[2]))
+  X_robo.append(float(linha[0]))
+  Y_robo.append(float(linha[1]))
+  T_robo.append(float(linha[2]))
   teste.append(linha)
 
 positionInitialBall = vector(X_bola[0] * 10, Y_bola[0] * 10, 2)
@@ -96,7 +96,7 @@ for i in range(len(X_bola)):
 	robo.pos.y = Y_robo[i] * 10
 
 	print(f'T_bola[i]: {T_bola[i]} \nT_robo[-1]: {T_robo[i]}')
-	if T_bola[i] >= T_robo[i]:
+	if T_robo[i] == T_robo[-1]:
 		print(f'T_bola[i]: {T_bola[i]} \nT_robo[-1]: {T_robo[i]}')
 		robo.pos.x = X_bola[i] * 10
 		robo.pos.y = Y_bola[i] * 10
