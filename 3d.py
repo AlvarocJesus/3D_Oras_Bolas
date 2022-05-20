@@ -13,7 +13,7 @@ dados_robo = trajetoria_robo.readlines()
 trajetoria_robo.close()
 traj_robo = []
 
-# -------------------------------Formatação de dados da bola-------------------
+# -------------------------------Formatação de dados da bola e do robo-------------------
 dados_formatados = []
 for linha in dados_bola:
 	linha = remove_control_characters(linha)
@@ -61,8 +61,7 @@ for linha in dados_formatados:
 		else:
 			dado += char
 
-finalizar = 0
-
+# Separar os dados do robo em listas
 T_robo = []
 X_robo = []
 Y_robo = []
@@ -74,9 +73,24 @@ for linha in traj_robo:
   T_robo.append(float(linha[2]))
   teste.append(linha)
 
+# -------------------------------Desenha entidades da animação-------------------
 positionInitialBall = vector(X_bola[0] * 10, Y_bola[0] * 10, 2)
 
 campo = box(pos=vector(45, 30, 0), size=vector(90, 60, 0), color=color.green)
+meioCampo = cylinder(pos=vector(45, 0, 0), axis=vector(0, 60, 0), radius=0.5)
+circuloCentral = ring(pos=vector(45, 30, 0), axis=vector(0, 0, 1), radius=10, thickness=0.5)
+
+# -------------------------------Desenha gol do lado direito-------------------
+travessaoGolDireito = cylinder(pos=vector(6, 25, 0), axis=vector(0, 15, 0), radius=0.5)
+traveCimaGolDireito = cylinder(pos=vector(0, 25, 0), axis=vector(6, 0, 0), radius=0.5)
+traveBaixoGolDireito = cylinder(pos=vector(0, 40, 0), axis=vector(6, 0, 0), radius=0.5)
+
+# -------------------------------Desenha gol do lado esquerdo-------------------
+travessaoGolEsquerdo = cylinder(pos=vector(84, 25, 0), axis=vector(0, 15, 0), radius=0.5)
+traveCimaGolEsquerdo = cylinder(pos=vector(84, 25, 0), axis=vector(6, 0, 0), radius=0.5)
+traveBaixoGolEsquerdo = cylinder(pos=vector(84, 40, 0), axis=vector(6, 0, 0), radius=0.5)
+
+# ---------------------Desenha robo, bola e delimitador da condição-------------------
 ball = sphere(pos=positionInitialBall, radius=2, color=color.cyan, make_trail=True, retain=1000)
 robo = box(pos=vector(X_robo[0] * 10, Y_robo[0] * 10, 2.6), size=vector(2, 2, 2), color=color.red, make_trail=True, retain=1000)
 delimiter = ring(pos=positionInitialBall, axis=vector(0, 0, 1), radius=10, thickness=0.1)
