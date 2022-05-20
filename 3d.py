@@ -97,7 +97,6 @@ delimiter = ring(pos=positionInitialBall, axis=vector(0, 0, 1), radius=10, thick
 
 # ----------Movimentação da bola--------------------
 # ----------Movimentação do Robô--------------------
-print(f'tamanho lista X_robo: {len(X_robo)}')
 for i in range(len(X_robo)):
 	sleep(0.02)
 	ball.pos.x = X_bola[i] * 10
@@ -105,3 +104,8 @@ for i in range(len(X_robo)):
 
 	robo.pos.x = X_robo[i] * 10
 	robo.pos.y = Y_robo[i] * 10
+
+	# ---------------------Condição para robo nao entrar na bola-------------------
+	if X_robo[i] == X_robo[-1]:
+		robo.pos.x += 2
+		robo.pos.y += 2
