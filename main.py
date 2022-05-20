@@ -4,7 +4,7 @@ import unicodedata
 def remove_control_characters(s):
 	return "".join(ch for ch in s if unicodedata.category(ch)[0]!="C")
 
-trajetoria_bola = open("./Ora_bolas-trajetoria_bola_oficial.txt", "r")
+trajetoria_bola = open("./Ora_bolas-trajetoria_bola_oficial(1).txt", "r")
 dados_bola = trajetoria_bola.readlines()
 trajetoria_bola.close()
 
@@ -73,6 +73,9 @@ for linha in traj_robo:
   T_robo.append(float(linha[2]))
   teste.append(linha)
 
+scene = canvas(width = 900, height = 500)
+
+
 # -------------------------------Desenha entidades da animação-------------------
 positionInitialBall = vector(X_bola[0] * 10, Y_bola[0] * 10, 2)
 
@@ -94,6 +97,8 @@ traveBaixoGolEsquerdo = cylinder(pos=vector(84, 40, 0), axis=vector(6, 0, 0), ra
 ball = sphere(pos=positionInitialBall, radius=2, color=color.cyan, make_trail=True, retain=1000)
 robo = box(pos=vector(X_robo[0] * 10, Y_robo[0] * 10, 2.6), size=vector(2, 2, 2), color=color.red, make_trail=True, retain=1000)
 delimiter = ring(pos=positionInitialBall, axis=vector(0, 0, 1), radius=10, thickness=0.1)
+
+scene.camera.follow(circuloCentral)
 
 # ----------Movimentação da bola--------------------
 # ----------Movimentação do Robô--------------------

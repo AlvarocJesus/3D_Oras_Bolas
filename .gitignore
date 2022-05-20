@@ -1,2 +1,5 @@
 .vscode
+build
+dist
+3d.spec
 teste.py
