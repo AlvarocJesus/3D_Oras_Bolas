@@ -1,14 +1,10 @@
-import tornado
 from vpython import *
-from random import uniform
 import unicodedata
-import math
-import os
 
 def remove_control_characters(s):
 	return "".join(ch for ch in s if unicodedata.category(ch)[0]!="C")
 
-trajetoria_bola = open("./trajetoria.txt", "r")
+trajetoria_bola = open("./Ora_bolas-trajetoria_bola_oficial.txt", "r")
 dados_bola = trajetoria_bola.readlines()
 trajetoria_bola.close()
 
@@ -82,25 +78,16 @@ positionInitialBall = vector(X_bola[0] * 10, Y_bola[0] * 10, 2)
 
 campo = box(pos=vector(45, 30, 0), size=vector(90, 60, 0), color=color.green)
 ball = sphere(pos=positionInitialBall, radius=2, color=color.cyan, make_trail=True, retain=1000)
-robo = box(pos=vector(X_robo[0] * 10, Y_robo[0] * 10, 2.6), size=vector(5, 5, 5), color=color.red, make_trail=True, retain=1000)
+robo = box(pos=vector(X_robo[0] * 10, Y_robo[0] * 10, 2.6), size=vector(2, 2, 2), color=color.red, make_trail=True, retain=1000)
 delimiter = ring(pos=positionInitialBall, axis=vector(0, 0, 1), radius=10, thickness=0.1)
 
 # ----------Movimentação da bola--------------------
 # ----------Movimentação do Robô--------------------
-for i in range(len(X_bola)):
+print(f'tamanho lista X_robo: {len(X_robo)}')
+for i in range(len(X_robo)):
 	sleep(0.02)
 	ball.pos.x = X_bola[i] * 10
 	ball.pos.y = Y_bola[i] * 10
 
 	robo.pos.x = X_robo[i] * 10
 	robo.pos.y = Y_robo[i] * 10
-
-	print(f'T_bola[i]: {T_bola[i]} \nT_robo[-1]: {T_robo[i]}')
-	if T_robo[i] == T_robo[-1]:
-		print(f'T_bola[i]: {T_bola[i]} \nT_robo[-1]: {T_robo[i]}')
-		robo.pos.x = X_bola[i] * 10
-		robo.pos.y = Y_bola[i] * 10
-		break
-
-	if i == 100:
-		print("Ponto de encontro inexistente!")
